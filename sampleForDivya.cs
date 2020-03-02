@@ -1,13 +1,17 @@
 using System.Collections.Generic;
+using System;
 namespace generics{
     public class sampleForDivya{
 
-        public static void Main(){
-            usecaseUrlResponse result=new usecaseUrlResponse();
-        result.classA=
-        result.cat=
-        return result
-        }
+        // public static void Main(){
+        //    for(int i=0;i<10;i++){
+        //        if(i<5){
+        //            continue;
+        //        }
+        //        Console.WriteLine(i);
+        //    }
+       
+        // }
 
         public class usecaseUrlResponse{
             List<classA> classA=new List<classA>();
