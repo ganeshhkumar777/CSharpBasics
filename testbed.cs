@@ -4,7 +4,7 @@ namespace generics{
         public static void Main(string[] args){
             // linqTial obj=new linqTial();
             // obj.main();
-            linqSample.main();
+             linqSample.main();
         }
     }
 }

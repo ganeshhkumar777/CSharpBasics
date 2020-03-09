@@ -25,31 +25,47 @@ namespace generics.linq{
                 _name=value;
             }
         }
+
+        public List<string> Interests;
+    }
+
+    public class student2{
+        public string newname;
+        public int newid;
+
+
     }
     public class linqSample{
         public static void main(){
 
+            var result3 = new {name="",Value=""};
             
-
+            // 
+            // {"interest1","interest2","interest3","interest4","interest5","interest6"}
             List<student> employees=new List<student>{
                 new student(){
                     id=1,
-                    name="aaa"
+                    name="aaa",
+                    Interests=new List<String>{"interest1","interest2",}
+                    
                 },
                 new student(){
                     id=2,
-                    name="bbb"
+                    name="bbb",
+                    Interests=new List<String>{"interest3","interest4",}
                 },
                 new student(){
                     id=3,
-                    name="ccc"
+                    name="ccc",
+                    Interests=new List<String>{"interest5","interest6",}
                 }
             };
+            
           Console.WriteLine("executing filter");
           IEnumerable<student> result=Enumerable.Empty<student>();
           try{
+
              result= employees.filter(x=>x.id>=1);
-          
           
              Console.WriteLine("after filter");
              foreach(var i in result){
@@ -82,6 +98,30 @@ namespace generics.linq{
         //   while(enumerator.MoveNext()){
         //       Console.WriteLine(enumerator.Current);
         //   }
+
+            var projectionExample=employees.Select(x=>new student2(){
+                newname=x.name,
+                newid=x.id
+            }).ToList();
+
+            Console.WriteLine("select Example");
+            var diffbwselectandselctmany = employees.Select(x=>x.Interests);
+            foreach(var i in diffbwselectandselctmany){
+                foreach(var j in i){
+                    Console.WriteLine(j);
+                }
+                
+            }
+
+             Console.WriteLine("selectManyExample");
+            var selectManyExample=employees.SelectMany(x=>x.Interests);
+            foreach(var i in selectManyExample){
+                        Console.WriteLine(i);
+                }
+
+            // var firstExample= employees.First(x=>x.id==0);
+            var firstOrDefaultExample= employees.FirstOrDefault(x=>x.id==0);
+
         }
     }
 
