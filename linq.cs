@@ -7,6 +7,8 @@ namespace generics.linq{
     public class student{
         private int _id;
         private string _name;
+
+        private int _mark;
         public int id{
             get{
                 Console.WriteLine("getting :"+_id);
@@ -26,7 +28,20 @@ namespace generics.linq{
             }
         }
 
+        public int mark{
+            get{
+                return _mark;
+            }
+            set{
+                _mark=value;
+            }
+        }
+
         public List<string> Interests;
+
+        public override String ToString(){
+            return _id+"+"+_name +"+"+_mark;
+        }
     }
 
     public class student2{
@@ -46,18 +61,34 @@ namespace generics.linq{
                 new student(){
                     id=1,
                     name="aaa",
+                    mark=100,
                     Interests=new List<String>{"interest1","interest2",}
                     
                 },
                 new student(){
                     id=2,
                     name="bbb",
+                   mark=100,
                     Interests=new List<String>{"interest3","interest4",}
                 },
                 new student(){
                     id=3,
                     name="ccc",
+                   mark=100,
                     Interests=new List<String>{"interest5","interest6",}
+                },
+                new student(){
+                    id=1,
+                    name="aaa1",
+                   mark=100,
+                    Interests=new List<String>{"interest51","interest61",}
+                }
+                ,
+                new student(){
+                    id=2,
+                    name="bbb2",
+                    mark=100,
+                    Interests=new List<String>{"interest52","interest62",}
                 }
             };
             
@@ -122,6 +153,29 @@ namespace generics.linq{
             // var firstExample= employees.First(x=>x.id==0);
             var firstOrDefaultExample= employees.FirstOrDefault(x=>x.id==0);
 
+
+            var resultGroupBy = employees.GroupBy(x=>x.id);
+            foreach (var item in resultGroupBy)
+            {
+                Console.WriteLine(item.Key);
+                foreach(var i in item){
+                   Console.WriteLine(i.ToString()) ;
+                }
+            }
+
+            var sumExample= employees.Sum(x=>x.mark);
+
+            Console.WriteLine(sumExample);
+
+            Console.WriteLine("aggregate example");
+                
+            var resultOfAggregate= employees.Aggregate(0,(acc,input)=>{
+                Console.WriteLine(acc);
+                Console.WriteLine(input.ToString());
+                Console.WriteLine(acc+"+"+input.mark);
+                return acc+input.mark;
+            });
+            Console.WriteLine(resultOfAggregate);
         }
     }
 
