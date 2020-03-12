@@ -11,7 +11,7 @@ namespace generics.linq{
         private int _mark;
         public int id{
             get{
-                Console.WriteLine("getting :"+_id);
+              //  Console.WriteLine("getting :"+_id);
                 return _id;
             }
             set{
@@ -20,7 +20,7 @@ namespace generics.linq{
         }
         public string name{
             get {
-                Console.WriteLine("getting :"+ _name);
+              //  Console.WriteLine("getting :"+ _name);
                 return _name;
             }
             set{
@@ -55,6 +55,21 @@ namespace generics.linq{
 
             var result3 = new {name="",Value=""};
             
+            List<student> students=new List<student>(){
+                new student(){
+                    id=1,
+                    name="list2",
+                    mark=100,
+                    Interests=new List<String>{"interest1","interest2",}
+                    
+                },
+                new student(){
+                    id=2,
+                    name="list3",
+                   mark=100,
+                    Interests=new List<String>{"interest3","interest4",}
+                }
+            };
             // 
             // {"interest1","interest2","interest3","interest4","interest5","interest6"}
             List<student> employees=new List<student>{
@@ -176,6 +191,37 @@ namespace generics.linq{
                 return acc+input.mark;
             });
             Console.WriteLine(resultOfAggregate);
+             Console.WriteLine("join example");
+        var resultjoin =    (from a in employees
+                            join b in students on a.id equals b.id
+                            select new projectedClass(){
+                                id= a.id,
+                                name=a.name
+                               
+                            }).ToList();
+            foreach (var item in resultjoin)
+            {
+                Console.WriteLine(item.id + item.name + item.newname);
+            }
+            Console.WriteLine("left outer join example");
+            var resultleftouterjoin = (from a in employees
+                            join b in students on a.id equals b.id into temp
+                            from j in temp.DefaultIfEmpty()
+                            select new projectedClass{
+                                id= a.id ,
+                                name = a.name,
+                                newname = j
+                            });
+             foreach (var item in resultleftouterjoin)
+            {
+                Console.WriteLine( "left "+item.id + item.name );
+                    if(item.newname != null){
+                       Console.WriteLine("right " + item.newname.name);
+                    } else {
+                        Console.WriteLine("right hand side is null");
+                    }
+                    
+            }
         }
     }
 
@@ -232,6 +278,12 @@ namespace generics.linq{
            //  return temp;
                 
         }
+    }
+
+    public class projectedClass{
+        public int id ;
+        public string name;
+        public student newname;
     }
     
 
