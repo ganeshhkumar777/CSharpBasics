@@ -48,10 +48,14 @@ namespace generics.adonet{
 
                 var param2= new SqlParameter("@b",SqlDbType.Int);
                 param2.Direction=ParameterDirection.Output;
+                
+                var param3= new SqlParameter("@c",SqlDbType.Int);
+                param3.Direction=ParameterDirection.ReturnValue;
 
                 
                 command.Parameters.Add(param1);
                 command.Parameters.Add(param2);
+                command.Parameters.Add(param3);
 
                 connection.Open();
                 var result = command.ExecuteReader();
@@ -59,8 +63,9 @@ namespace generics.adonet{
                     Console.WriteLine(result.IsDBNull(result.GetOrdinal("name"))
                     ? "" : result.GetString(result.GetOrdinal("name")));
                 }
-
+                result.Close();
                  var temp=command.Parameters["@b"].Value;
+                  var temp2=command.Parameters["@c"].Value;
                  Console.WriteLine(temp);
                 
             }

@@ -7,9 +7,11 @@ namespace generics{
             // linqTial obj=new linqTial();
             // obj.main();
             //linqSample.main();
-             //adonet.adonet.main();
+            // adonet.adonet.main();
+             
+             //AdoNetConnectedExamples.main();
             // AdoNetConnectedExamples.main();
-            adonetsample.main();
+             adonetsample.main();
         }
     }
 }
