@@ -14,7 +14,10 @@ public class adonetsample{
        //insertrecords(names);
        // Reading();
       // ReadingUsingSP();
-      SaveUsingSP();
+        // SaveUsingSP();
+        // DisconnectedFill();
+       // DisconnectedInsert("disconnectedinsert");
+       DisconnectedUpdate("updatedname");
     }
 
     public static void createtableandinsertdata(){
@@ -188,6 +191,124 @@ public class adonetsample{
 
     }
 
+    public static void DisconnectedFill(string CommandText="select id,name from firsttable"){
+
+        SqlConnection connection=new SqlConnection();
+        connection.ConnectionString="Data Source=CDC2-D-CGQVXJ2\\SQLEXPRESS01;Initial Catalog=adonetsample;Integrated Security=true";
+
+        SqlCommand command=new SqlCommand();
+        command.CommandText=CommandText;
+        command.Connection=connection;
+
+        SqlDataAdapter dataAdapter=new SqlDataAdapter();
+        dataAdapter.SelectCommand=command;
+        
+        DataSet dataSet=new DataSet();
+        //collection of datatables
+        
+        dataAdapter.Fill(dataSet);
+
+
+        DataTable dataTable=new DataTable();
+        if(dataSet.Tables.Count >0){
+            dataTable=dataSet.Tables[0];
+        }
+        
+
+        foreach(DataRow dr in dataTable.Rows){
+
+             foreach (DataColumn item in dataTable.Columns)
+             {
+                 Console.WriteLine(dr[item]);
+             }   
+        }
+    }
+
+    public static void DisconnectedInsert(string toInsert){
+        
+        SqlConnection connection=new SqlConnection();
+        connection.ConnectionString="Data Source=CDC2-D-CGQVXJ2\\SQLEXPRESS01;Initial Catalog=adonetsample;Integrated Security=true";
+
+        SqlCommand command=new SqlCommand();
+        command.CommandText="insert into firsttable(name) values(@name)";
+        command.Connection=connection;
+        
+        SqlParameter parameter=new SqlParameter();
+        parameter.ParameterName="@name";
+        parameter.SourceColumn="name";
+
+        command.Parameters.Add(parameter);
+
+        DataTable dataTable=new DataTable();
+        dataTable.Columns.Add("name");
+
+        DataRow dataRow=dataTable.NewRow();
+        dataRow["name"]=toInsert;
+        dataTable.Rows.Add(dataRow);
+
+        SqlDataAdapter dataAdapter=new SqlDataAdapter();
+        dataAdapter.InsertCommand=command;
+
+        var result = dataAdapter.Update(dataTable);
+        
+        DisconnectedFill();
+
+        // name    id 
+        // name1    1
+        // name3    4
+        // name5    5
+    }
+
+    public static void DisconnectedUpdate(string newName){
+        
+       
+        SqlConnection connection=new SqlConnection();
+        connection.ConnectionString="Data Source=CDC2-D-CGQVXJ2\\SQLEXPRESS01;Initial Catalog=adonetsample;Integrated Security=true";
+
+        SqlCommand command=new SqlCommand();
+        command.CommandText="select name,id from firsttable where id=1";
+        command.Connection=connection;
+
+        SqlDataAdapter dataAdapter=new SqlDataAdapter();
+        dataAdapter.SelectCommand=command;
+        
+        DataSet dataSet=new DataSet();
+        //collection of datatables
+        
+        dataAdapter.Fill(dataSet);
+
+
+        DataTable dataTable=new DataTable();
+        if(dataSet.Tables.Count >0){
+            dataTable=dataSet.Tables[0];
+        }
+        dataTable.Rows[0][0]=newName;
+
+        SqlCommand commandupdate=new SqlCommand();
+        commandupdate.CommandText="update firsttable set name=@name where id=@id";
+        commandupdate.Connection=connection;
+
+        SqlParameter parameter1=new SqlParameter();
+        parameter1.ParameterName="@name";
+        parameter1.SourceColumn="name";
+
+        SqlParameter parameter2=new SqlParameter();
+        parameter2.ParameterName="@id";
+        parameter2.SourceColumn="id";
+
+        commandupdate.Parameters.Add(parameter1);
+        commandupdate.Parameters.Add(parameter2);
+
+        dataAdapter.UpdateCommand=commandupdate;
+
+        dataAdapter.Update(dataTable);
+
+        DisconnectedFill();
+        // name         id 
+        // newname1     1
+        // name3        4
+        // name5        5
+    }
     
 }
 
