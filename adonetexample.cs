@@ -2,6 +2,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System;
 using System.Collections.Generic;
+// using System.Transactions.;
 public class adonetsample{
     public static void main(){
        // createtableandinsertdata();
@@ -15,9 +16,13 @@ public class adonetsample{
        // Reading();
       // ReadingUsingSP();
         // SaveUsingSP();
-        // DisconnectedFill();
+        DisconnectedFill();
        // DisconnectedInsert("disconnectedinsert");
-       DisconnectedUpdate("updatedname");
+     //  DisconnectedUpdate("updatedname");
+      String[] transactionName=new String[]{
+            "firstname",
+        };
+     // Transaction(transactionName);
     }
 
     public static void createtableandinsertdata(){
@@ -308,8 +313,74 @@ public class adonetsample{
         // newname1     1
         // name3        4
         // name5        5
+
+
+
+        
     }
+        
+        //address
+        //mobile
+        //name
+
+        // insert statement2    
+        // userdetails 
+            // userdetailsid
+            // address
+            // mobile
+
+        // insert statement1 
+        // user --> userdetailsid as foreign key
+            // userid
+            // name
+            // userdetailsid
     
+     public static void Transaction(String[] names){
+
+        
+        using(SqlConnection connection=new SqlConnection()){
+            connection.ConnectionString="Data Source=CDC2-D-CGQVXJ2\\SQLEXPRESS01;Initial Catalog=adonetsample;Integrated Security=true";
+            connection.Open();
+
+            SqlTransaction transaction=connection.BeginTransaction();
+
+            SqlCommand command=new SqlCommand();
+            command.CommandText="insert into firsttable values(@name)";
+            command.CommandType=CommandType.Text;
+            command.Connection=connection;
+            command.Transaction=transaction;
+
+            SqlParameter parameter=new SqlParameter();
+            parameter.ParameterName="@name";
+            parameter.Direction=ParameterDirection.Input;
+            
+            command.Parameters.Add(parameter);
+            List<int> result=new List<int>();
+            foreach(string name in names){
+                
+            parameter.Value= name;
+             result.Add(command.ExecuteNonQuery()); //insert,update,delete, dealing with schemas 
+            }
+           
+            SqlCommand command1=new SqlCommand();
+            command1.CommandText="insert into firsttable values('secondname')";
+            command1.CommandType=CommandType.Text;
+            command1.Connection=connection;
+            command1.Transaction=transaction;
+
+            command1.ExecuteNonQuery();
+            
+           //
+
+            transaction.Commit();
+            // transaction.Rollback();
+
+            Console.WriteLine(result);
+            //ExecuteScalar -- Count(1), Max(1),
+            //ExecuteReader -- Reading in 
+        }
+    }
+
 }
 
 
