@@ -1,6 +1,6 @@
 using generics.linq;
 using generics.adonet;
-
+using generics.EntityFrameworkCore.trialtwocontextreplica;
 namespace generics{
     public class testbed{
         public static void Main(string[] args){
@@ -11,7 +11,9 @@ namespace generics{
              
              //AdoNetConnectedExamples.main();
             // AdoNetConnectedExamples.main();
-             adonetsample.main();
+            // adonetsample.main();
+           // TrialTwoContextReplicaConsumer.main();
+           IOCCOntainerConsumer.main();
         }
     }
 }
