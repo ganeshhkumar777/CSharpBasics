@@ -9,10 +9,13 @@ public class IOCCOntainerConsumer{
                 .addTransient<classB,classB>();
 
         // whoever creates an instance of your class will use this method
+        // controller(iclassA classa)
         Type result= builder.Get(typeof(iclassA));
-        var obj= Activator.CreateInstance(result);
-        (obj as classA).print();
+        // new classA();
 
+        var obj= Activator.CreateInstance(result);
+
+        // 
     }
 
 

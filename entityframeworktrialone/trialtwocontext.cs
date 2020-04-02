@@ -5,11 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 namespace generics.EntityFrameworkCore{
 public class trialtwocontext : DbContext {
-    public DbSet<employee> employees;
+    public DbSet<employee> employees{get; set;}
+    public DbSet<employeeDetails> employeeDetails{get; set;}
+    public DbSet<student> students{get; set;}
+    public DbSet<employeestudentassociation> employeestudentassociations{get; set;}
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder
      builder){
          if(!builder.IsConfigured){
-            builder.UseSqlServer("Data Source=CDC2-D-CGQVXJ2\\SQLEXPRESS01;Initial Catalog=entityfameworkexample;Integrated Security=true");
+            builder.UseSqlServer("Data Source=CDC2-D-CGQVXJ2\\SQLEXPRESS01;Initial Catalog=entityfameworktrialtwocontext;Integrated Security=true");
          }
     }
 

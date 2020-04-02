@@ -3,12 +3,13 @@
 //
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System;
 namespace generics.EntityFrameworkCore.trialtwocontextreplica{
 public class trialtwocontextreplica : DbContext {
-    public DbSet<employee> employees;
-    public DbSet<employeeDetails> employeeDetails;
-    public DbSet<student> students;
-    public DbSet<employeestudentassociation> employeestudentassociations;
+    public DbSet<employee> employees{get; set;}
+    public DbSet<employeeDetails> employeeDetails{get; set;}
+    public DbSet<student> students {get; set;}
+    public DbSet<employeestudentassociation> employeestudentassociations{get; set;}
     protected override void OnConfiguring(DbContextOptionsBuilder
      builder){
          if(!builder.IsConfigured){
@@ -37,6 +38,8 @@ public class trialtwocontextreplica : DbContext {
             .HasConstraintName("FK_employeedetailsid_employeedetails")
             .IsRequired(false);
 
+            x.Property(y=>y.CreatesOn)
+                .IsRowVersion();
 
 
         });
@@ -90,6 +93,7 @@ public class employee{
 
     public int? EmployeeDetailsId{get; set;}
 
+    public DateTime CreatesOn{get; set;}
     public employeeDetails employeeDetails{get; set;}
     public List<employeestudentassociation> employeestudentassociations { get; set; }
 }

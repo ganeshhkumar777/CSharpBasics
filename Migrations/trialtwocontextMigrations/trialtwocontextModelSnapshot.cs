@@ -43,7 +43,7 @@ namespace generics.Migrations.trialtwocontextMigrations
                     b.HasIndex("EmployeeDetailsId")
                         .IsUnique();
 
-                    b.ToTable("employee");
+                    b.ToTable("employees");
                 });
 
             modelBuilder.Entity("generics.EntityFrameworkCore.employeeDetails", b =>
@@ -85,7 +85,7 @@ namespace generics.Migrations.trialtwocontextMigrations
 
                     b.HasIndex("studentid");
 
-                    b.ToTable("employeestudentassociation");
+                    b.ToTable("employeestudentassociations");
                 });
 
             modelBuilder.Entity("generics.EntityFrameworkCore.student", b =>
@@ -102,7 +102,7 @@ namespace generics.Migrations.trialtwocontextMigrations
 
                     b.HasKey("studentid");
 
-                    b.ToTable("student");
+                    b.ToTable("students");
                 });
 
             modelBuilder.Entity("generics.EntityFrameworkCore.employee", b =>

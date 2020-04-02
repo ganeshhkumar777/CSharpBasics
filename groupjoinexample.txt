@@ -1,0 +1,56 @@
+
+Tableb
+Id2	Tablebname
+1	B1
+2	B2
+
+
+
+Tablea 
+Id	tableaname	Id2
+1	A1	1
+2	A2	1
+3	A3	2
+4	A4	2
+
+from b in tableb
+Join a in tablea on a.id2 equals b.id2 into temp
+Select new {
+b.id2,
+b.tablebname,
+Resuloftablea: a.ToList();
+}
+
+[
+{
+Id2:1,
+Tablename:B1
+Resultoftablea:[
+	{
+		Tableaname:A1,
+		Id2:1
+	},
+	{
+		Tableaname:A2,
+		Id2: 2
+	}
+]
+
+},
+{
+Id2:2,
+Tablename: B2,
+Resultoftablea:[
+	{
+		Tableaname:A3,
+		Id2:3
+	},
+	{
+		Tableaname:A4,
+		Id2: 4
+	}
+]
+}
+
+]
+
