@@ -36,7 +36,7 @@ namespace generics.EntityFrameworkCore{
             //  insertintoemployee(con,"address5","name5");
             // insertintoemployee(con,"address6","name6");
             // insertintostudent(con);
-            insertintoassociationtable(con,new empstudassociation("name4","student1"));
+            insertintoassociationtable(con,new List<empstudassociation>{new empstudassociation("name4","student1")});
           }
          
       }
@@ -71,13 +71,53 @@ namespace generics.EntityFrameworkCore{
       }
 
       
-        public static void insertintoassociationtable(trialtwocontext con,empstudassociation item){
+        public static void insertintoassociationtable(trialtwocontext con,List<empstudassociation> items){
 
+         //[
+         // {
+         // employeename:"name4"
+         // studentname:  "student2"  
+         // },
+         // {
+         // employeename:"name5"
+         // studentname:  "student2"  
+         // },
+         //]
 
-                int eid=con.employees.Where(x=>x.name.Equals(item.ename))
+            List<string> existinge=items.Select(x=>x.ename).ToList();
+         
+         // ["name4","name5"]
+
+            List<string> existings=items.Select(x=>x.sname).ToList();
+
+        // ["student2","student2"]
+        //  id  name
+        //  1   gan
+        //  2   gan
+        var result = con.employees.AsEnumerable() 
+                     .Where(x=>existinge.Contains(x.name))
+                     .Distinct();
+
+        //
+        List<employee> eids=con.employees.Where(x=>existinge.       Contains(x.name)).Distinct().ToList();
+        // Distinct here indicates the distinct of all the columns 
+        // in the result set
+        // select * from employee
+        // where name in ("name4","name5")
+
+        // [{},{}]
+            List<student> sids=con.students.Where(x=>existings.Contains(x.name)).ToList();
+        
+
+        // select * from student
+        // where name in ("student2","student2")
+        
+            foreach(var item in items){
+            
+                int eid=eids.Where(x=>x.name.Equals(item.ename))
                                      .FirstOrDefault()
                                      .id;
-                int sid=con.students.Where(x=>x.name.Equals(item.sname))
+                int sid=sids.Where(x=>x.name.Equals(item.sname))
                                     .FirstOrDefault()
                                     .studentid;
 
@@ -93,10 +133,37 @@ namespace generics.EntityFrameworkCore{
                 assoc.employeeid=eid;
                 assoc.studentid=sid;
                 con.employeestudentassociations.Add(assoc);
+            }
                 con.SaveChanges();
 
         }
-     
+
+        
+        public static void joinExamples(trialtwocontext con) {
+            
+            con.employees.Where(x=>x.employeeDetails.EmployeeDetailsId==1).Count();
+            // select count(*)
+
+            // The below one should be avoided
+            con.employees.Where(x=>x.employeeDetails.EmployeeDetailsId==1).ToList().Count();
+
+            // select * from employee
+            // where emp==1
+            var result = from e in con.employees
+            join emp in con.employeeDetails
+            on e.EmployeeDetailsId equals emp.EmployeeDetailsId
+            where emp.EmployeeDetailsId==1
+            select e;
+
+            // con.employees.Join(con.employeeDetails,(x)=>x.id,
+            // (y) =>{
+            //     y,
+            // },(a,b)=>{
+            //     a.id === b.
+            // })
+
+            
+        }
     }
     public class empstudassociation{
         public string ename;
