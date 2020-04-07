@@ -15,6 +15,7 @@ public class trialtwocontext : DbContext {
      builder){
          if(!builder.IsConfigured){
             builder.UseSqlServer("Data Source=CDC2-D-CGQVXJ2\\SQLEXPRESS01;Initial Catalog=entityfameworktrialtwocontext;Integrated Security=true");
+            
          }
     }
 

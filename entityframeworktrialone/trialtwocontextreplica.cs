@@ -6,6 +6,13 @@ using System.Collections.Generic;
 using System;
 namespace generics.EntityFrameworkCore.trialtwocontextreplica{
 public class trialtwocontextreplica : DbContext {
+
+    
+
+
+
+    // -->
+    // controller
     public DbSet<employee> employees{get; set;}
     public DbSet<employeeDetails> employeeDetails{get; set;}
     public DbSet<student> students {get; set;}

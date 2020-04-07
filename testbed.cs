@@ -9,14 +9,14 @@ namespace generics{
             // obj.main();
             //linqSample.main();
             // adonet.adonet.main();
-             
+             //func<base,derived>=func<derive>
              //AdoNetConnectedExamples.main();
             // AdoNetConnectedExamples.main();
             // adonetsample.main();
             // TrialTwoContextReplicaConsumer.main();
            //IOCCOntainerConsumer.main();
-           trialtwocontextconsumer.main();
-           
+          // trialtwocontextconsumer.main();
+            trialtwocontextusingrepositorypattern.main();
         }
     }
 }

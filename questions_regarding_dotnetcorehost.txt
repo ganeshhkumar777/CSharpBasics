@@ -1,0 +1,10 @@
+// url 
+    // What is the link between url and your web server
+    // and how the http request reaches your web server
+
+    // What is the difference between http and https
+
+    // what web server does with the http request
+    // before triggering your code
+
+    
