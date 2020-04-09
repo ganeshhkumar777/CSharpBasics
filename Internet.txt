@@ -1,0 +1,54 @@
+
+        
+    Server
+
+consider DNS as a dictionary
+
+key             value
+websitename     ip
+
+mysite.com      121.112
+
+
+        --> Network provider has a DNS --> site also a DNS
+                 
+--> proxy sites 
+
+    user --> proxy --> website  
+
+
+--> reverse proxy 
+
+    user --> site ---redirects to---> another port
+    
+    user --> iis/apache/nginx   -->      kestrel server/IISHttpServer   
+                              dotnet run 
+
+--> OWIN   -- Open Web Interface For Net
+
+An HTTP request is nothing but set of headers sent from sender to receiver 
+
+some common header:
+
+iis:
+
+contenttype   --> A
+authorization   --> B
+
+apache:
+
+contenttype   --> A
+authorization   --> B
+
+-- ASP.NET Core:
+
+
+
+
+
+
+
+
+
+
+

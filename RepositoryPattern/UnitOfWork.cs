@@ -16,10 +16,14 @@ public class UnitOfWork{
     }
 
     public EmployeeRepository employeeRepository{
-        get; set;
+        get{
+            return new EmployeeRepository(context);
+        } 
     }
 
     public EmployeeDetailsRepository employeeDetailsRepository{
-        get; set;
+        get{
+            return new EmployeeDetailsRepository(context);
+        }
     }
 }
